@@ -1,4 +1,3 @@
-//Poriect-POO
 #include <iostream>
 #include <conio.h>
 #include <string>
@@ -6,12 +5,132 @@
 
 using namespace std;
 
+
+
 class CreateTable
 {
 private:
-	char TableName[20], ColumnName[20], ColumnType[20], AuxCommand[100], AuxCommandCPY[100], *p;
+	char test[5] = { 't','e','s','t' };
+	char TableName[20], ColumnName[20], ColumnType[20], AuxCommand[100], AuxCommandCPY[100], * p;
 	unsigned int  CellSize;
 public:
+
+	//Constructor Implicit
+	CreateTable()
+	{
+		strcpy(TableName, "-");
+		strcpy(ColumnName, "-");
+		strcpy(ColumnType, "-");
+		strcpy(AuxCommand, "-");
+		strcpy(AuxCommandCPY, "-");
+	}
+
+	//Getter TableName
+	char* GetterTN()
+	{
+		char* p = TableName;
+		return p;
+	}
+
+	//Getter ColumnName
+	char* GetterCN()
+	{
+		char* p = ColumnName;
+		return p;
+	}
+
+	//Getter ColumnType
+	char* GetterCT()
+	{
+		char* p = ColumnType;
+		return p;
+	}
+
+	//Getter AuxCommand
+	char* GetterAC()
+	{
+		char* p = AuxCommand;
+		return p;
+	}
+
+	//Getter AuxCommandCPY
+	char* GetterACC()
+	{
+		char* p = AuxCommandCPY;
+		return p;
+	}
+
+	//Getter CellSize
+	unsigned int GetterCS()
+	{
+		return CellSize;
+	}
+
+	//Setter TableName
+	void SetterTN(char TableName[20])
+	{
+		if (strlen(TableName) != 0)
+		{
+			strcpy(this->TableName, TableName);
+		}
+		else
+			cout << "\nERROR: Inavlid or Empty Value!";
+	}
+
+	//Setter ColumnName
+	void SetterCN(char ColumnName[20])
+	{
+		if (strlen(ColumnName) != 0)
+		{
+			strcpy(this->ColumnName, ColumnName);
+		}
+		else
+			cout << "\nERROR: Inavlid or Empty Value!";
+	}
+	
+	//Setter ColumnType
+	void SetterCT(char ColumnType[20])
+	{
+		if (strlen(ColumnType) != 0)
+		{
+			strcpy(this->ColumnType, ColumnType);
+		}
+		else
+			cout << "\nERROR: Inavlid or Empty Value!";
+	}
+
+	//Setter AuxCommand
+	void SetterAC(char AuxCommand[100])
+	{
+		if (strlen(AuxCommand) != 0)
+		{
+			strcpy(this->AuxCommand, AuxCommand);
+		}
+		else
+			cout << "\nERROR: Inavlid or Empty Value!";
+	}
+
+	//Setter AuxCommandCPY
+	void SetterACC(char AuxCommandCPY[100])
+	{
+		if (strlen(AuxCommandCPY) != 0)
+		{
+			strcpy(this->AuxCommandCPY, AuxCommandCPY);
+		}
+		else
+			cout << "\nERROR: Inavlid or Empty Value!";
+	}
+
+	//Setter CellSize
+	void SetterCS(unsigned int  CellSize)
+	{
+		if (CellSize != 0)
+			this->CellSize = CellSize;
+		else
+			cout << "\nERROR: Inavlid or Empty Value!";
+	}
+
+	//Constructor cu Parametru
 	CreateTable(char command[100])
 	{
 		TNFct(command);
@@ -20,7 +139,53 @@ public:
 		CSFct();
 	}
 
-	void TNFct(char command[100]) //TableName function
+	// Constructor Copiere
+	CreateTable(const CreateTable& obj) 
+	{
+		if (p != nullptr)
+		{
+			delete[] p;
+		}
+		strcpy(this->TableName,obj.TableName);
+		strcpy(this->ColumnName, obj.ColumnName);
+		strcpy(this->ColumnType, obj.ColumnType);
+		strcpy(this->AuxCommand, obj.AuxCommand);
+		strcpy(this->AuxCommandCPY, obj.AuxCommandCPY);
+		this->p = obj.p;
+		this->CellSize = obj.CellSize;
+	}
+
+	//Overloading = operator
+	CreateTable& operator=(CreateTable& obj)
+	{
+		if (p != nullptr)
+		{
+			delete[] p;
+		}
+		this->p = obj.p;
+		strcpy(this->TableName, obj.TableName);
+		strcpy(this->ColumnName, obj.ColumnName);
+		strcpy(this->ColumnType, obj.ColumnType);
+		strcpy(this->AuxCommand, obj.AuxCommand);
+		strcpy(this->AuxCommandCPY, obj.AuxCommandCPY);
+		return *this;
+	}
+
+	//Overloading + operator
+	CreateTable operator+(CreateTable obj)
+	{
+		CreateTable copy;
+		strcat(copy.TableName, obj.TableName);
+		strcat(copy.ColumnName, obj.ColumnName);
+		strcat(copy.ColumnType, obj.ColumnType);
+		strcat(copy.AuxCommand, obj.AuxCommand);
+		strcat(copy.AuxCommandCPY, obj.AuxCommandCPY);
+		copy.CellSize = copy.CellSize + obj.CellSize;
+		return copy;
+	}
+
+	//TableName function
+	void TNFct(char command[100]) 
 	{
 		strcpy(AuxCommand, command);
 		strcpy(AuxCommand, AuxCommand + (strlen("CREATE TABLE ")));
@@ -32,7 +197,8 @@ public:
 		//cout << endl << "Command after: " << AuxCommand << endl;
 	}
 
-	void CNFct() //ColumnName function
+	//ColumnName function
+	void CNFct() 
 	{
 		strcpy(AuxCommandCPY, AuxCommand);
 		p = strtok(AuxCommand, " ");
@@ -43,7 +209,8 @@ public:
 		//cout << endl << "Command after: " << AuxCommand << endl;
 	}
 
-	void CTFct()//ColumnType Function
+	//ColumnType Function
+	void CTFct()
 	{
 		strcpy(AuxCommandCPY, AuxCommand);
 		//p = strtok(AuxCommand, "(");
@@ -54,7 +221,8 @@ public:
 		//cout << endl << "Command after: " << AuxCommand << endl;
 	}
 
-	void CSFct() //Cell Size function
+	//Cell Size function
+	void CSFct() 
 	{
 		strcpy(AuxCommandCPY, AuxCommand);
 		p = strtok(AuxCommand, ")");
@@ -66,17 +234,82 @@ public:
 		//cout << endl << "Command after: " << AuxCommand << endl;
 	}
 
+	//Deconstructor
+	~CreateTable()
+	{
+		if (p != nullptr)
+		{
+			delete[] p;
+		}
+	}
 };
+
+//Overloading << operator
+ostream& operator<<(ostream& out, CreateTable& obj)
+{
+	out << "Table Name: " << obj.GetterTN() << endl;
+	out << "Column Name: " << obj.GetterCN() << endl;
+	out << "Column Type: " << obj.GetterCT() << endl;
+	out << "AuxCommand: " << obj.GetterAC() << endl;
+	out << "AuxCommandCPY: " << obj.GetterACC() << endl;
+	out << "CellSize: " << obj.GetterCS() << endl;
+	return out;
+}
+
+//Overloading >> operator
+istream& operator>>(istream& in, CreateTable& obj)
+{
+	char insert[50];
+	unsigned int insert2;
+	cout << "Table Name: ";
+	in >> insert;
+	obj.SetterTN(insert);
+	cout << "Column Name: ";
+	in >> insert;
+	obj.SetterCN(insert);
+	cout << "Column Type: ";
+	in >> insert;
+	obj.SetterCT(insert);
+	cout << "AuxCommand: ";
+	in >> insert;
+	obj.SetterAC(insert);
+	cout << "AuxCommandCPY: ";
+	in >> insert;
+	obj.SetterACC(insert);
+	cout << "Cell Size: ";
+	in >> insert2;
+	obj.SetterCS(insert2);
+	return in;
+}
 
 class DropTable
 {
 private:
 	char TableName[20];
-	char AuxCommand[100], AuxCommandCPY[100], *p;
+	char AuxCommand[100], AuxCommandCPY[100], * p;
 public:
+
 	DropTable(char command[100])
 	{
 		TNFct(command);
+	}
+
+	char* GetterTB()
+	{
+		char* p = TableName;
+		return p;
+	}
+
+	char* GetterAC()
+	{
+		char* p = AuxCommand;
+		return p;
+	}
+
+	char* GetterACC()
+	{
+		char* p = AuxCommandCPY;
+		return p;
 	}
 
 	void TNFct(char command[100]) //TableName function
@@ -101,6 +334,24 @@ public:
 	DisplayTable(char command[100])
 	{
 		TNFct(command);
+	}
+
+	char* GetterTB()
+	{
+		char* p = TableName;
+		return p;
+	}
+
+	char* GetterAC()
+	{
+		char* p = AuxCommand;
+		return p;
+	}
+
+	char* GetterACC()
+	{
+		char* p = AuxCommandCPY;
+		return p;
 	}
 
 	void TNFct(char command[100]) //TableName function
@@ -135,6 +386,37 @@ public:
 			return;
 		TNFct();
 		ColumnsFct();
+	}
+
+	char* GetterTB()
+	{
+		char* p = TableName;
+		return p;
+	}
+
+	char* GetterCN()
+	{
+		char* p = ColumnName;
+		return p;
+	}
+
+	char* GetterIN()
+	{
+		char* p = IndexName;
+		return p;
+	}
+
+
+	char* GetterAC()
+	{
+		char* p = AuxCommand;
+		return p;
+	}
+
+	char* GetterACC()
+	{
+		char* p = AuxCommandCPY;
+		return p;
 	}
 
 	void INFct(char command[100]) //IndexName function
@@ -229,6 +511,25 @@ public:
 		INFct(command);
 	}
 
+	char* GetterIN()
+	{
+		char* p = IndexName;
+		return p;
+	}
+
+	char* GetterAC()
+	{
+		char* p = AuxCommand;
+		return p;
+	}
+
+	char* GetterACC()
+	{
+		char* p = AuxCommandCPY;
+		return p;
+	}
+
+
 	void INFct(char command[100]) //IndexName function
 	{
 		strcpy(AuxCommand, command);
@@ -261,9 +562,25 @@ public:
 		else if (strchr(AuxCommand, ',') != nullptr)
 			CNsFct();
 		else if (strchr(AuxCommand, ',') == nullptr)
-			CNFct();
-		
-		
+			CNFct();	
+	}
+
+	char* GetterCN()
+	{
+		char* p = ColumnName;
+		return p;
+	}
+
+	char* GetterAC()
+	{
+		char* p = AuxCommand;
+		return p;
+	}
+
+	char* GetterACC()
+	{
+		char* p = AuxCommandCPY;
+		return p;
 	}
 
 	void CNsFct() //Multiple Column Names Function
@@ -398,23 +715,54 @@ public:
 
 
 
+
 int main()
 {
 	char UserCommand[100];
+	char* test=nullptr;
 	CommandMain obj;
 	bool ok = 0;
-	
+
 
 	cout << "Welcome to The Big Boi Database\nPlease follow the instructions and write all commands in uppercase\n\n";
 	
-	cout << "\nEnter command or 'EXIT' to close program: ";
+	cout << "\nTo see what 'TEST' commands are available, enter 'HELP'\nEnter command or 'EXIT' to close program: ";
 
 	while (true) {
 		cin.get(UserCommand, 100);
 		cin.get();
 		if (strcmp("EXIT", UserCommand) == 0)
 		{
-			return 0;
+			break;
+		}
+		else if (strncmp("HELP", UserCommand, 4) == 0)
+		{
+			cout << "\nAvailable 'TEST' Commands: \n";
+			cout << "'TEST <<' - Tests overloaded out operator\n";
+			cout << "'TEST >>' - Tests overloaded in operator\n";
+			cout << "\nEnter command: ";
+		}
+		else if (strncmp("TEST <<", UserCommand, 7) == 0)
+		{
+			CreateTable tester;
+			//test = tester.GetterTN();
+			//char c[50];
+			//strcpy(c, test);
+			//cout << endl << test << endl;
+			cout << tester << endl;;
+			break;
+		}
+		else if (strncmp("TEST >>", UserCommand, 7) == 0)
+		{
+			CreateTable tester;
+			cin >> tester;
+			cout << endl;
+			break;
+		}
+		else if (strncmp("TEST", UserCommand, 4) == 0)
+		{
+			cout << "\nERROR: Test command missing specification. Please use 'HELP' to see what 'TEST' commands are available.\n";
+			cout << "\nEnter command: ";
 		}
 		else
 		{
@@ -425,7 +773,7 @@ int main()
 			}
 			else if (ok == 1)
 			{
-				cout << "\nEnter command:";
+				cout << "\nEnter command: ";
 			}
 		}
 	}
